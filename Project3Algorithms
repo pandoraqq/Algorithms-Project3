@@ -1,0 +1,35 @@
+def bfs(graph, start): 
+    visited, queue = set(), [start] 
+    p = []
+    while queue: 
+        vertex = queue.pop(0)
+        if vertex not in visited: 
+            visited.add(vertex)
+            p.append(vertex)
+            queue.extend(v for v in graph[vertex] if v not in visited) 
+    return p
+
+G = {'A': ['E', 'F', 'B'], 'B': ['A', 'F', 'C'], 'C': ['B', 'G', 'D'], 'D': ['C', 'G'], 'E': ['A', 'F', 'I'],
+  'F': ['E', 'A', 'B'], 'G': ['D', 'C', 'J'], 'H': ['K', 'L'], 'I': ['E', 'F', 'J', 'M'], 'J': ['I', 'G'],
+  'K': ['H', 'L', 'O'], 'L': ['H', 'K', 'P'], 'M': ['I', 'N'], 'N': ['M'], 'O': ['K'], 'P': ['L']}
+
+print(bfs(G,'L'))
+#Can not find all connected components
+
+t=0
+def dfs(graph, start, visited=None): 
+    global t
+    t += 1
+    print('DSF called ', t, 'times.')
+    if visited is None: 
+        visited = set()
+    visited.add(start)
+    for key in set(graph[start]).difference(visited):  
+       dfs(graph, key, visited)
+    return visited 
+
+G = {'A': ['E', 'F', 'B'], 'B': ['A', 'F', 'C'], 'C': ['B', 'G', 'D'], 'D': ['C', 'G'], 'E': ['A', 'F', 'I'],
+  'F': ['E', 'A', 'B'], 'G': ['D', 'C', 'J'], 'H': ['K', 'L'], 'I': ['E', 'F', 'J', 'M'], 'J': ['I', 'G'],
+  'K': ['H', 'L', 'O'], 'L': ['H', 'K', 'P'], 'M': ['I', 'N'], 'N': ['M'], 'O': ['K'], 'P': ['L']}
+
+print(dfs(G,'A'))
